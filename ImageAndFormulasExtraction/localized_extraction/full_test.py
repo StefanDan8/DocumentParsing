@@ -1,5 +1,6 @@
 import argparse
 import json
+from io import BytesIO
 from pathlib import Path
 
 import numpy as np
@@ -52,6 +53,16 @@ def process_page(page, model, page_dir, num_pix_extra):
             json.dumps(entries, indent=2, ensure_ascii=False), encoding="utf-8"
         )
 
+    return result
+
+
+def add_annotated_page(document, result):
+    image = Image.fromarray(result.plot(line_width=2)[:, :, ::-1])
+    buffer = BytesIO()
+    image.save(buffer, format="PNG")
+    page = document.new_page(width=image.width, height=image.height)
+    page.insert_image(page.rect, stream=buffer.getvalue())
+
 
 def run_document(pdf_path, output_dir=None, num_pix_extra=0):
     pdf_path = Path(pdf_path)
@@ -65,10 +76,12 @@ def run_document(pdf_path, output_dir=None, num_pix_extra=0):
     )
     model = YOLO(weights)
 
-    with pymupdf.open(pdf_path) as document:
+    with pymupdf.open(pdf_path) as document, pymupdf.open() as annotated:
         for number, page in enumerate(document, start=1):
-            process_page(page, model, output_dir / f"page_{number:03}", num_pix_extra)
+            result = process_page(page, model, output_dir / f"page_{number:03}", num_pix_extra)
+            add_annotated_page(annotated, result)
             print(f"Processed page {number}/{len(document)}", flush=True)
+        annotated.save(output_dir / f"{pdf_path.stem}_annotated.pdf", deflate=True)
 
     return output_dir
 
