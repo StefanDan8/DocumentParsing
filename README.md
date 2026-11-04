@@ -2,39 +2,43 @@
 
 ## Roadmap
 
-[] Have close to perfect parsing on:
-    [x] readable pdfs -- found DocLayout-YOLO with amazing performance and GNU license
-    [] scanned pdfs -- to find good OCR with permisive license (I will check PaddleOCR first)
+- [ ] Have close to perfect parsing on:
+  - [x] readable pdfs -- found DocLayout-YOLO with amazing performance and GNU license
+  - [ ] scanned pdfs -- to find good OCR with permisive license (I will check PaddleOCR first)
 
-[] Pipeline to match image (table) footnotes, image (table) captions and images (tables)
+- [ ] Pipeline to match image (table) footnotes, image (table) captions and images (tables)
 
-[] Detector for text regions that have not been succesfully parsed. Needed for routing challenging text regions to expensive VLM (treat similarly to images/tables). Fallback for when the OCR model fails.
+- [ ] Detector for text regions that have not been succesfully parsed. Needed for routing
+      challenging text regions to expensive VLM (treat similarly to images/tables).
+      Fallback for when the OCR model fails.
 
-[] Module that sends (crop, footnote, caption) tuple, optionally with some context from page to a VLM via API call,
-that can output the, say, LaTeX code to generate an approximation of that table , graph, math formula, 
-or detect that it is a natural image and return a caption as such
+- [ ] Module that sends (crop, footnote, caption) tuple, optionally with some context from
+      page to a VLM via API call, that can output the, say, LaTeX code to generate an
+      approximation of that table, graph, math formula, or detect that it is a natural
+      image and return a caption as such
 
-[] Coarse clustering of JSON output bundle based on keywords to reduce token count.
-    [] Pure wording
-    [] + localization (x pages before, y pages after) -- text regions may be split across pages, or longer context needed
+- [ ] Coarse clustering of JSON output bundle based on keywords to reduce token count.
+  - [ ] Pure wording
+  - [ ] + localization (x pages before, y pages after) -- text regions may be split across
+        pages, or longer context needed
 
-[] Module that sends API call to more economically viable LLM for text processing
-    [] text regions
-    [] text regions + results from VLM if in local context window
+- [ ] Module that sends API call to more economically viable LLM for text processing
+  - [ ] text regions
+  - [ ] text regions + results from VLM if in local context window
 
-[] Pipeline for selecting ground truth for validation.
+- [ ] Pipeline for selecting ground truth for validation.
 
-[] Create a dataset and train (if finetuning necessary / development), validation and test splits
+- [ ] Create a dataset and train (if finetuning necessary / development), validation and test splits
 
-[] Metrics and benchmarking: TP, FP, TN, FN, precision, recall, F1, etc.
+- [ ] Metrics and benchmarking: TP, FP, TN, FN, precision, recall, F1, etc.
 
-[] Token/Cloud compute usage dashboard/tracker.
+- [ ] Token/Cloud compute usage dashboard/tracker.
 
-[] Prompt optimization
+- [ ] Prompt optimization
 
-[] Cost and token usage reduction
+- [ ] Cost and token usage reduction
 
-[] Speed, latency and resource consumption (VRAM, RAM, Disk Space) optimizations
+- [ ] Speed, latency and resource consumption (VRAM, RAM, Disk Space) optimizations
 
 
 ## Requirements
